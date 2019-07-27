@@ -7,7 +7,8 @@ let renderer, camera, controls, scene, cube;
 class App extends Component {
   componentDidMount() {
     this.sceneSetup();
-    this.addCustomSceneObjects();
+    this.lighting();
+    this.addObjects();
     this.animate();
   }
 
@@ -34,11 +35,22 @@ class App extends Component {
     window.addEventListener("resize", this.handleWindowResize);
   };
 
-  addCustomSceneObjects = () => {
+  addObjects = () => {
     const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x20b2aa });
+    const material = new THREE.MeshStandardMaterial({ color: 0x20b2aa });
     cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
+  };
+
+  lighting = () => {
+    // Create a directional light
+    const light = new THREE.DirectionalLight(0xffffff, 5.0);
+
+    // move the light back and up a bit
+    light.position.set(5, 5, 5);
+
+    // remember to add the light to the scene
+    scene.add(light);
   };
 
   animate = () => {
