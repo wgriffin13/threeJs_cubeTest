@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-let renderer, camera, controls, scene, cube, cube2;
+let renderer, camera, controls, scene, cubeOne, cubeTwo, cubeThree;
 
 class App extends Component {
   componentDidMount() {
@@ -17,12 +17,12 @@ class App extends Component {
     scene.background = new THREE.Color(0xffffff);
 
     camera = new THREE.PerspectiveCamera(
-      75,
+      35,
       window.innerWidth / window.innerHeight,
       0.1,
       100
     );
-    camera.position.z = 5;
+    camera.position.z = 7;
 
     controls = new OrbitControls(camera, this.el);
     controls.enableZoom = true;
@@ -33,22 +33,6 @@ class App extends Component {
 
     this.mount.appendChild(renderer.domElement);
     window.addEventListener("resize", this.handleWindowResize);
-  };
-
-  addObjects = () => {
-    // const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
-    const material = new THREE.MeshStandardMaterial({
-      color: 0xababab,
-      metalness: 0.5,
-      roughness: 0.8
-    });
-    // const material = new THREE.MeshStandardMaterial({ color: 0x20b2aa });
-    cube = new THREE.Mesh(geometry, material);
-    cube2 = new THREE.Mesh(geometry, material);
-    cube2.position.x = 2;
-    scene.add(cube);
-    scene.add(cube2);
   };
 
   lighting = () => {
@@ -102,12 +86,46 @@ class App extends Component {
     scene.add(pointLight4);
   };
 
+  addObjects = () => {
+    const geometryOne = new THREE.BoxBufferGeometry(1, 1, 1);
+    const materialOne = new THREE.MeshStandardMaterial({
+      color: 0xababab,
+      metalness: 0.5,
+      roughness: 0.8
+    });
+
+    const materialTwo = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      metalness: 0.0,
+      roughness: 0.8
+    });
+
+    const texture = new THREE.TextureLoader().load("textures/crate.gif");
+    const materialThree = new THREE.MeshStandardMaterial({
+      map: texture
+    });
+
+    cubeOne = new THREE.Mesh(geometryOne, materialOne);
+    cubeTwo = new THREE.Mesh(geometryOne, materialTwo);
+    cubeTwo.position.x = 1.5;
+    cubeThree = new THREE.Mesh(geometryOne, materialThree);
+    cubeThree.position.x = -1.5;
+
+    scene.add(cubeOne);
+    scene.add(cubeTwo);
+    scene.add(cubeThree);
+  };
+
   animate = () => {
     requestAnimationFrame(this.animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    cube2.rotation.x += 0.01;
-    cube2.rotation.z += 0.01;
+    cubeOne.rotation.x += 0.01;
+    cubeOne.rotation.y += 0.01;
+    cubeTwo.rotation.x += 0.01;
+    cubeTwo.rotation.y += 0.01;
+    cubeThree.rotation.x += 0.01;
+    cubeThree.rotation.y += 0.01;
+
+    // console.log(renderer.info.render.calls); //add right above the render call
     renderer.render(scene, camera);
   };
 
