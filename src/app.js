@@ -38,15 +38,11 @@ class App extends Component {
 
   lighting = () => {
     // const light = new THREE.DirectionalLight(0xffffff, 3.0);
-    // move the light back and up a bit
     // light.position.set(5, 5, 5);
     // scene.add(light);
 
-    // const hemiLight = new THREE.HemisphereLight(0xfdfde1, 0x030310, 3);
-    // scene.add(hemiLight);
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
+    // const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    // scene.add(ambientLight);
 
     const sphere = new THREE.SphereBufferGeometry(0.5, 16, 8);
 
@@ -96,9 +92,10 @@ class App extends Component {
     });
     // const materialTwo = new THREE.MeshPhongMaterial({ shininess: 0.0 });
     const materialTwo = new THREE.MeshStandardMaterial({
-      color: 0x777777,
-      metalness: 0.0,
-      roughness: 0.8
+      // color: 0x777777,
+      color: 0xffffff,
+      metalness: 0.97,
+      roughness: 0.3
     });
 
     const textureLoader = new THREE.TextureLoader();
@@ -111,9 +108,6 @@ class App extends Component {
     cubeThree.material.map = textureLoader.load(
       "http://localhost:3000/marble512px.jpg"
     );
-
-    // const texture = new THREE.TextureLoader().load("textures/Marble_800px.jpg");
-    // "https://github.com/prechapl/threejs-react/blob/dev/textures/Marble_800px.jpg"
 
     cubeOne = new THREE.Mesh(geometryOne, materialOne);
     cubeTwo = new THREE.Mesh(geometryOne, materialTwo);
