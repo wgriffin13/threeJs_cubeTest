@@ -100,8 +100,8 @@ class App extends Component {
       roughness: 0.8
     });
 
-    const texture = new THREE.TextureLoader().load("textures/crate.gif");
-    const materialThree = new THREE.MeshStandardMaterial({
+    const texture = new THREE.TextureLoader().load("textures/Marble_800px.jpg");
+    const materialThree = new THREE.MeshBasicMaterial({
       map: texture
     });
 
@@ -110,6 +110,8 @@ class App extends Component {
     cubeTwo.position.x = 1.5;
     cubeThree = new THREE.Mesh(geometryOne, materialThree);
     cubeThree.position.x = -1.5;
+
+    // "https://github.com/prechapl/threejs-react/blob/dev/textures/Marble_800px.jpg"
 
     scene.add(cubeOne);
     scene.add(cubeTwo);
