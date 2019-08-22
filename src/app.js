@@ -52,15 +52,17 @@ class App extends Component {
     const pointLight = new THREE.PointLight(0x1bc236, 1);
     pointLight.position.x = 800;
     pointLight.position.z = 300;
-    pointLight.add(
-      new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0x1bc236 }))
-    );
+    //Visual Marker for point light
+    // pointLight.add(
+    //   new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0x1bc236 }))
+    // );
     scene.add(pointLight);
 
     //Red
     const pointLight2 = new THREE.PointLight(0xfb3f3f, 1);
     pointLight2.position.x = -8;
     pointLight2.position.z = 3;
+    //Visual Marker for point light
     // pointLight2.add(
     //   new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0xfb3f3f }))
     // );
@@ -68,18 +70,20 @@ class App extends Component {
 
     //Blue
     const pointLight3 = new THREE.PointLight(0x0000ff, 1);
-    pointLight3.add(
-      new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0x0000ff }))
-    );
+    //Visual Marker for point light
+    // pointLight3.add(
+    //   new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0x0000ff }))
+    // );
     pointLight3.position.y = 8;
     pointLight3.position.z = 3;
     scene.add(pointLight3);
 
     //Cyan
     const pointLight4 = new THREE.PointLight(0x00f6ff, 1);
-    pointLight4.add(
-      new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0x00f6ff }))
-    );
+    //Visual Marker for point light
+    // pointLight4.add(
+    //   new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0x00f6ff }))
+    // );
     pointLight4.position.y = -8;
     pointLight4.position.z = 3;
     scene.add(pointLight4);
