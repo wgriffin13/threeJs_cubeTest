@@ -37,10 +37,12 @@ class App extends Component {
   };
 
   lighting = () => {
+    // Directional Light
     // const light = new THREE.DirectionalLight(0xffffff, 3.0);
     // light.position.set(5, 5, 5);
     // scene.add(light);
 
+    // Ambient Light
     // const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     // scene.add(ambientLight);
 
@@ -59,9 +61,9 @@ class App extends Component {
     const pointLight2 = new THREE.PointLight(0xfb3f3f, 1);
     pointLight2.position.x = -8;
     pointLight2.position.z = 3;
-    pointLight2.add(
-      new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0xfb3f3f }))
-    );
+    // pointLight2.add(
+    //   new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0xfb3f3f }))
+    // );
     scene.add(pointLight2);
 
     //Blue
@@ -106,7 +108,7 @@ class App extends Component {
     cubeThree = new THREE.Mesh(geometryOne, materialThree);
     cubeThree.position.x = -1.5;
     cubeThree.material.map = textureLoader.load(
-      "http://localhost:3000/marble512px.jpg"
+      "http://localhost:3001/marble512px.jpg"
     );
 
     cubeOne = new THREE.Mesh(geometryOne, materialOne);
