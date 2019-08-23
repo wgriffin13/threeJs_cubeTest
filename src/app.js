@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-
-let renderer, camera, controls, scene, cubeOne, cubeTwo, cubeThree;
+// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 class App extends Component {
   componentDidMount() {
@@ -13,26 +12,26 @@ class App extends Component {
   }
 
   sceneSetup = () => {
-    scene = new THREE.Scene();
+    this.scene = new THREE.Scene();
     // scene.background = new THREE.Color(0xffffff); // white background
-    scene.background = new THREE.Color(0x000000); // black background
+    this.scene.background = new THREE.Color(0x000000); // black background
 
-    camera = new THREE.PerspectiveCamera(
+    this.camera = new THREE.PerspectiveCamera(
       35,
       window.innerWidth / window.innerHeight,
       0.1,
       100
     );
-    camera.position.z = 7;
+    this.camera.position.z = 7;
 
-    controls = new OrbitControls(camera, this.el);
-    controls.enableZoom = true;
+    this.controls = new OrbitControls(this.camera, this.el);
+    this.controls.enableZoom = true;
 
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setPixelRatio(window.devicePixelRatio);
 
-    this.mount.appendChild(renderer.domElement);
+    this.mount.appendChild(this.renderer.domElement);
     window.addEventListener("resize", this.handleWindowResize);
   };
 
@@ -46,7 +45,7 @@ class App extends Component {
     // const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     // scene.add(ambientLight);
 
-    const sphere = new THREE.SphereBufferGeometry(0.5, 16, 8);
+    // const sphere = new THREE.SphereBufferGeometry(0.5, 16, 8);
 
     //Green
     const pointLight = new THREE.PointLight(0x1bc236, 1);
@@ -56,7 +55,7 @@ class App extends Component {
     // pointLight.add(
     //   new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0x1bc236 }))
     // );
-    scene.add(pointLight);
+    this.scene.add(pointLight);
 
     //Red
     const pointLight2 = new THREE.PointLight(0xfb3f3f, 1);
@@ -66,7 +65,7 @@ class App extends Component {
     // pointLight2.add(
     //   new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0xfb3f3f }))
     // );
-    scene.add(pointLight2);
+    this.scene.add(pointLight2);
 
     //Blue
     const pointLight3 = new THREE.PointLight(0x0000ff, 1);
@@ -76,7 +75,7 @@ class App extends Component {
     // );
     pointLight3.position.y = 8;
     pointLight3.position.z = 3;
-    scene.add(pointLight3);
+    this.scene.add(pointLight3);
 
     //Cyan
     const pointLight4 = new THREE.PointLight(0x00f6ff, 1);
@@ -86,7 +85,7 @@ class App extends Component {
     // );
     pointLight4.position.y = -8;
     pointLight4.position.z = 3;
-    scene.add(pointLight4);
+    this.scene.add(pointLight4);
   };
 
   addObjects = () => {
@@ -98,7 +97,6 @@ class App extends Component {
     });
     // const materialTwo = new THREE.MeshPhongMaterial({ shininess: 0.0 });
     const materialTwo = new THREE.MeshStandardMaterial({
-      // color: 0x777777,
       color: 0xffffff,
       metalness: 0.97,
       roughness: 0.3
@@ -109,44 +107,68 @@ class App extends Component {
     const materialThree = new THREE.MeshBasicMaterial({
       color: 0xffffff
     });
-    cubeThree = new THREE.Mesh(geometryOne, materialThree);
-    cubeThree.position.x = -1.5;
-    cubeThree.material.map = textureLoader.load(
-      "http://localhost:3001/marble512px.jpg"
+    this.cubeThree = new THREE.Mesh(geometryOne, materialThree);
+    this.cubeThree.position.x = -1.5;
+    this.cubeThree.material.map = textureLoader.load(
+      "http://localhost:3000/marble512px.jpg"
     );
 
-    cubeOne = new THREE.Mesh(geometryOne, materialOne);
-    cubeTwo = new THREE.Mesh(geometryOne, materialTwo);
-    cubeTwo.position.x = 1.5;
+    this.cubeOne = new THREE.Mesh(geometryOne, materialOne);
+    this.cubeTwo = new THREE.Mesh(geometryOne, materialTwo);
+    this.cubeTwo.position.x = 1.5;
 
-    scene.add(cubeOne);
-    scene.add(cubeTwo);
-    scene.add(cubeThree);
+    this.scene.add(this.cubeOne);
+    this.scene.add(this.cubeTwo);
+    this.scene.add(this.cubeThree);
+
+    // GLTF Loader not working!!!
+
+    // this.THREE = THREE;
+    // const gltfLoader = new this.THREE.GLTFLoader();
+    // gltfLoader.load(
+    //   "/theAppAge.glb",
+    //   function(gltf) {
+    //     this.scene.add(gltf.scene);
+    //     // gltf.animations;
+    //     // gltf.scene;
+    //     // gltf.scenes;
+    //     // gltf.cameras;
+    //     // gltf.asset;
+    //   },
+
+    //   function(xhr) {
+    //     console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+    //   },
+
+    //   function(error) {
+    //     console.log("An error happened");
+    //   }
+    // );
   };
 
   animate = () => {
     requestAnimationFrame(this.animate);
-    cubeOne.rotation.x += 0.01;
-    cubeOne.rotation.y += 0.01;
-    cubeTwo.rotation.x += 0.01;
-    cubeTwo.rotation.y += 0.01;
-    cubeThree.rotation.x += 0.01;
-    cubeThree.rotation.y += 0.01;
+    this.cubeOne.rotation.x += 0.01;
+    this.cubeOne.rotation.y += 0.01;
+    this.cubeTwo.rotation.x += 0.01;
+    this.cubeTwo.rotation.y += 0.01;
+    this.cubeThree.rotation.x += 0.01;
+    this.cubeThree.rotation.y += 0.01;
 
     // console.log(renderer.info.render.calls); //add right above the render call
-    renderer.render(scene, camera);
+    this.renderer.render(this.scene, this.camera);
   };
 
   handleWindowResize = () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
   };
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleWindowResize);
     window.cancelAnimationFrame(this.requestID);
-    controls.dispose();
+    this.controls.dispose();
   }
 
   render() {

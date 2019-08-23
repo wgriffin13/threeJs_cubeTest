@@ -1,12 +1,12 @@
 {
-  "name": "ThreeJs_Test_03",
+  "name": "cubetest",
   "version": "1.0.0",
   "main": "src/index.js",
   "dependencies": {
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-scripts": "2.1.8",
-    "three": "0.106.0"
+    "three": "0.107.0"
   },
   "devDependencies": {
     "typescript": "3.3.3"
