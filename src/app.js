@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-// import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 class App extends Component {
   componentDidMount() {
@@ -13,8 +13,8 @@ class App extends Component {
 
   sceneSetup = () => {
     this.scene = new THREE.Scene();
-    // scene.background = new THREE.Color(0xffffff); // white background
-    this.scene.background = new THREE.Color(0x000000); // black background
+    this.scene.background = new THREE.Color(0xffffff); // white background
+    // this.scene.background = new THREE.Color(0x000000); // black background
 
     this.camera = new THREE.PerspectiveCamera(
       35,
@@ -45,44 +45,26 @@ class App extends Component {
     // const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     // scene.add(ambientLight);
 
-    // const sphere = new THREE.SphereBufferGeometry(0.5, 16, 8);
-
     //Green
     const pointLight = new THREE.PointLight(0x1bc236, 1);
     pointLight.position.x = 800;
     pointLight.position.z = 300;
-    //Visual Marker for point light
-    // pointLight.add(
-    //   new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0x1bc236 }))
-    // );
     this.scene.add(pointLight);
 
     //Red
     const pointLight2 = new THREE.PointLight(0xfb3f3f, 1);
     pointLight2.position.x = -8;
     pointLight2.position.z = 3;
-    //Visual Marker for point light
-    // pointLight2.add(
-    //   new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0xfb3f3f }))
-    // );
     this.scene.add(pointLight2);
 
     //Blue
     const pointLight3 = new THREE.PointLight(0x0000ff, 1);
-    //Visual Marker for point light
-    // pointLight3.add(
-    //   new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0x0000ff }))
-    // );
     pointLight3.position.y = 8;
     pointLight3.position.z = 3;
     this.scene.add(pointLight3);
 
     //Cyan
     const pointLight4 = new THREE.PointLight(0x00f6ff, 1);
-    //Visual Marker for point light
-    // pointLight4.add(
-    //   new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0x00f6ff }))
-    // );
     pointLight4.position.y = -8;
     pointLight4.position.z = 3;
     this.scene.add(pointLight4);
@@ -95,7 +77,7 @@ class App extends Component {
       metalness: 0.5,
       roughness: 0.8
     });
-    // const materialTwo = new THREE.MeshPhongMaterial({ shininess: 0.0 });
+
     const materialTwo = new THREE.MeshStandardMaterial({
       color: 0xffffff,
       metalness: 0.97,
@@ -121,29 +103,25 @@ class App extends Component {
     this.scene.add(this.cubeTwo);
     this.scene.add(this.cubeThree);
 
-    // GLTF Loader not working!!!
+    // GLTF Loader
 
-    // this.THREE = THREE;
-    // const gltfLoader = new this.THREE.GLTFLoader();
-    // gltfLoader.load(
-    //   "/theAppAge.glb",
-    //   function(gltf) {
-    //     this.scene.add(gltf.scene);
-    //     // gltf.animations;
-    //     // gltf.scene;
-    //     // gltf.scenes;
-    //     // gltf.cameras;
-    //     // gltf.asset;
-    //   },
+    const gltfLoader = new GLTFLoader().setPath(
+      "http://localhost:3000/theAppAge.glb"
+    );
+    gltfLoader.load(
+      "theAppAge.glb",
+      function(gltf) {
+        this.scene.add(gltf.scene);
+      },
 
-    //   function(xhr) {
-    //     console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-    //   },
+      function(xhr) {
+        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+      },
 
-    //   function(error) {
-    //     console.log("An error happened");
-    //   }
-    // );
+      function(error) {
+        console.log("An error happened");
+      }
+    );
   };
 
   animate = () => {
