@@ -22,12 +22,14 @@ class App extends Component {
       0.1,
       100
     );
-    this.camera.position.z = 7;
+    this.camera.position.z = 10;
 
     this.controls = new OrbitControls(this.camera, this.el);
     this.controls.enableZoom = true;
 
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: true
+    });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(window.devicePixelRatio);
 
@@ -71,67 +73,70 @@ class App extends Component {
   };
 
   addObjects = () => {
-    const geometryOne = new THREE.BoxBufferGeometry(1, 1, 1);
-    const materialOne = new THREE.MeshStandardMaterial({
-      color: 0xababab,
-      metalness: 0.5,
-      roughness: 0.8
-    });
+    // Cubes
 
-    const materialTwo = new THREE.MeshStandardMaterial({
-      color: 0xffffff,
-      metalness: 0.97,
-      roughness: 0.3
-    });
+    // const geometryOne = new THREE.BoxBufferGeometry(1, 1, 1);
+    // const materialOne = new THREE.MeshStandardMaterial({
+    //   color: 0xababab,
+    //   metalness: 0.5,
+    //   roughness: 0.8
+    // });
 
-    const textureLoader = new THREE.TextureLoader();
+    // const materialTwo = new THREE.MeshStandardMaterial({
+    //   color: 0xffffff,
+    //   metalness: 0.97,
+    //   roughness: 0.3
+    // });
 
-    const materialThree = new THREE.MeshBasicMaterial({
-      color: 0xffffff
-    });
-    this.cubeThree = new THREE.Mesh(geometryOne, materialThree);
-    this.cubeThree.position.x = -1.5;
-    this.cubeThree.material.map = textureLoader.load(
-      "http://localhost:3000/marble512px.jpg"
-    );
+    // const textureLoader = new THREE.TextureLoader();
 
-    this.cubeOne = new THREE.Mesh(geometryOne, materialOne);
-    this.cubeTwo = new THREE.Mesh(geometryOne, materialTwo);
-    this.cubeTwo.position.x = 1.5;
+    // const materialThree = new THREE.MeshBasicMaterial({
+    //   color: 0xffffff
+    // });
+    // this.cubeThree = new THREE.Mesh(geometryOne, materialThree);
+    // this.cubeThree.position.x = -1.5;
+    // this.cubeThree.material.map = textureLoader.load("/marble512px.jpg");
 
-    this.scene.add(this.cubeOne);
-    this.scene.add(this.cubeTwo);
-    this.scene.add(this.cubeThree);
+    // this.cubeOne = new THREE.Mesh(geometryOne, materialOne);
+    // this.cubeTwo = new THREE.Mesh(geometryOne, materialTwo);
+    // this.cubeTwo.position.x = 1.5;
+
+    // this.scene.add(this.cubeOne);
+    // this.scene.add(this.cubeTwo);
+    // this.scene.add(this.cubeThree);
 
     // GLTF Loader
 
-    const gltfLoader = new GLTFLoader().setPath(
-      "http://localhost:3000/theAppAge.glb"
-    );
+    const gltfLoader = new GLTFLoader();
+
+    const onLoad = gltf => {
+      console.log(gltf);
+      const model = gltf.scene.children[0];
+      this.scene.add(model);
+    };
+
+    const onProgress = () => {};
+
+    const onError = errorMessage => {
+      console.log(errorMessage);
+    };
+
     gltfLoader.load(
-      "theAppAge.glb",
-      function(gltf) {
-        this.scene.add(gltf.scene);
-      },
-
-      function(xhr) {
-        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-      },
-
-      function(error) {
-        console.log("An error happened");
-      }
+      "/TheAppAge-v2.glb",
+      gltf => onLoad(gltf),
+      onProgress,
+      onError
     );
   };
 
   animate = () => {
     requestAnimationFrame(this.animate);
-    this.cubeOne.rotation.x += 0.01;
-    this.cubeOne.rotation.y += 0.01;
-    this.cubeTwo.rotation.x += 0.01;
-    this.cubeTwo.rotation.y += 0.01;
-    this.cubeThree.rotation.x += 0.01;
-    this.cubeThree.rotation.y += 0.01;
+    // this.cubeOne.rotation.x += 0.01;
+    // this.cubeOne.rotation.y += 0.01;
+    // this.cubeTwo.rotation.x += 0.01;
+    // this.cubeTwo.rotation.y += 0.01;
+    // this.cubeThree.rotation.x += 0.01;
+    // this.cubeThree.rotation.y += 0.01;
 
     // console.log(renderer.info.render.calls); //add right above the render call
     this.renderer.render(this.scene, this.camera);
